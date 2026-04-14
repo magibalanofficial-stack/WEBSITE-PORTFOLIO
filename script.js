@@ -320,7 +320,7 @@
 
   if (!form) return;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const name = document.getElementById('form-name').value.trim();
@@ -329,23 +329,38 @@
 
     if (!name || !email || !message) return;
 
-    // Simulate sending
+    // Simulate sending state
     const btnContent = submitBtn.querySelector('.btn-content');
+    const originalText = btnContent.textContent;
     btnContent.textContent = 'TRANSMITTING...';
     submitBtn.disabled = true;
     submitBtn.style.opacity = '0.7';
 
-    setTimeout(() => {
-      form.reset();
+    try {
+      const response = await fetch('https://formspree.io/f/xojyqowr', {
+        method: 'POST',
+        body: new FormData(form),
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        form.reset();
+        if (successMsg) {
+          successMsg.classList.add('show');
+          setTimeout(() => successMsg.classList.remove('show'), 4000);
+        }
+      } else {
+        alert('Transmission failed. Re-trying secure channel or try again later.');
+      }
+    } catch (error) {
+      alert('Network error detected. Please check your connection.');
+    } finally {
       submitBtn.disabled = false;
       submitBtn.style.opacity = '1';
-      btnContent.textContent = 'TRANSMIT MESSAGE';
-
-      if (successMsg) {
-        successMsg.classList.add('show');
-        setTimeout(() => successMsg.classList.remove('show'), 4000);
-      }
-    }, 1600);
+      btnContent.textContent = originalText;
+    }
   });
 })();
 
