@@ -12,11 +12,29 @@
 </head>
 <body>
 
+  <!-- ===== PRELOADER ===== -->
+  <div id="preloader">
+    <div class="loader-content">
+      <div class="loader-logo">
+        <span class="logo-bracket">[</span>
+        <span class="logo-text">MAGI</span>
+        <span class="logo-bracket">]</span>
+      </div>
+      <div class="loader-status">
+        <div class="status-bar"><div class="status-progress" id="loader-progress"></div></div>
+        <div class="status-text" id="loader-status-text">INITIALIZING SYSTEM...</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Particle Canvas Background -->
   <canvas id="particle-canvas"></canvas>
 
   <!-- Scanline Overlay -->
   <div class="scanline-overlay"></div>
+
+  <!-- ===== SCROLL PROGRESS ===== -->
+  <div id="scroll-progress"></div>
 
   <!-- ===== NAVIGATION ===== -->
   <nav id="navbar">

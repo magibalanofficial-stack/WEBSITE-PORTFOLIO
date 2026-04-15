@@ -3,6 +3,51 @@
    ============================================= */
 
 'use strict';
+ 
+/* ===== PRELOADER SEQUENCE ===== */
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  const progress = document.getElementById('loader-progress');
+  const statusText = document.getElementById('loader-status-text');
+  
+  const statusMessages = [
+    'INITIALIZING SYSTEM...',
+    'LOADING NEURAL NETWORKS...',
+    'CONNECTING TO DATA STREAMS...',
+    'OPTIMIZING UI COMPONENTS...',
+    'SYSTEM READY',
+  ];
+
+  let width = 0;
+  let msgIndex = 0;
+
+  const interval = setInterval(() => {
+    width += Math.random() * 15;
+    if (width > 100) width = 100;
+    
+    progress.style.width = width + '%';
+    
+    // Update messages based on progress
+    const nextMsgIndex = Math.floor((width / 100) * (statusMessages.length - 1));
+    if (nextMsgIndex > msgIndex) {
+      msgIndex = nextMsgIndex;
+      statusText.textContent = statusMessages[msgIndex];
+    }
+
+    if (width >= 100) {
+      clearInterval(interval);
+      setTimeout(() => {
+        preloader.classList.add('fade-out');
+        document.body.style.overflow = 'auto'; // Re-enable scroll
+        // Optional: Trigger any entrance animations here
+      }, 500);
+    }
+  }, 100);
+});
+
+// Disable scroll while loading
+document.body.style.overflow = 'hidden';
+
 
 /* ===== PARTICLE SYSTEM ===== */
 (function initParticles() {
@@ -115,7 +160,15 @@
   const navLinks = document.querySelectorAll('.nav-link');
   const sections = document.querySelectorAll('section[id]');
 
+  const scrollProgress = document.getElementById('scroll-progress');
+ 
   window.addEventListener('scroll', () => {
+    // Update scroll progress bar
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    if (scrollProgress) scrollProgress.style.width = scrolled + '%';
+
     if (window.scrollY > 50) {
       navbar.classList.add('scrolled');
     } else {
