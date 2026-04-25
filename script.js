@@ -5,11 +5,13 @@
 'use strict';
  
 /* ===== PRELOADER SEQUENCE ===== */
-window.addEventListener('load', () => {
+(function initPreloader() {
   const preloader = document.getElementById('preloader');
   const progress = document.getElementById('loader-progress');
   const statusText = document.getElementById('loader-status-text');
   
+  if (!preloader || !progress || !statusText) return;
+
   const statusMessages = [
     'INITIALIZING SYSTEM...',
     'LOADING NEURAL NETWORKS...',
@@ -39,11 +41,10 @@ window.addEventListener('load', () => {
       setTimeout(() => {
         preloader.classList.add('fade-out');
         document.body.style.overflow = 'auto'; // Re-enable scroll
-        // Optional: Trigger any entrance animations here
       }, 500);
     }
   }, 100);
-});
+})();
 
 // Disable scroll while loading
 document.body.style.overflow = 'hidden';
