@@ -1,7 +1,7 @@
-import Chart from 'chart.js/auto';
+import Chart from 'chart.js@3.9.1/auto'; // Specify a version
 
 // --- Constants & Config ---
-const NOMINATIM_URL = 'https://nominatim.openstreetmap.org/search';
+const NOMINATIM_URL = process.env.NOMINATIM_URL; // Use environment variables
 const WEATHER_URL = 'https://api.open-meteo.com/v1/forecast';
 
 const WMO_CODE_MAP = {
@@ -31,7 +31,7 @@ let currentCharts = {
 };
 
 // --- DOM Elements ---
-const searchInput = document.getElementById('city-search');
+const searchInput = document.getElementById('city-search'); const userInput = searchInput.value.trim(); if (userInput) { // Validate and sanitize user input } if (!searchInput) { console.error('Element not found'); }
 const searchBtn = document.getElementById('search-btn');
 const resultsDropdown = document.getElementById('search-results');
 const loader = document.getElementById('loader');
